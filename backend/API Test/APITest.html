@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body onload="loadDoc()">
+<h2>Order API Test</h2>
+<ul>
+ 
+  <li id="orderName"></li>
+  <li id="userEmail"></li>
+  <li id="userPhone"></li>
+  <li id="amount"></li>
+</ul>
+<img id="productImg"src="" width="200px">
+
+<script>
+function loadDoc() {
+  const xhttp = new XMLHttpRequest();
+  xhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+    	var obj_arr = JSON.parse( this.responseText);
+      
+  const newarr=obj_arr.map(
+    function(avalue){
+      document.getElementById("orderName").innerHTML =avalue.oname;
+      document.getElementById("userEmail").innerHTML =avalue.email;
+      document.getElementById("userPhone").innerHTML =avalue.phone;
+      document.getElementById("amount").innerHTML =avalue.amount;
+
+    return avalue;
+       /*  
+    Map has the convenience method forEach for iterating over its contents. Also see: http://devdocs.io/javascript/global_objects/map/foreach . Instead of using a for loop you could also do something like this:
+
+   let befaktoren = new Map([['foo', 'bar'], ['bar', 'foo']]);
+
+     let befaktorenFormatter = function(input) {
+  let formattedString;
+  input.forEach(function(value, key) {
+    formattedString += `${key}: ${value}<br>`;
+  });
+         return formattedString;
+    };
+
+         show.innerHTML = "Vorname: " + patient.vorname + "<br>Nachname: "
+   */
+  } 
+   );
+  console.log(newarr);
+  let ul=document.querySelector("ul");
+  newarr.forEach((values)=>{
+      ul.innerHTML+="<li>"+values.oname+"</li>";
+      ul.innerHTML+="<li>"+values.email+"</li>";
+      ul.innerHTML+="<li>"+values.phone+"</li>";
+      ul.innerHTML+="<li>"+values.amount+"</li>";
+    })
+    }
+    };
+  xhttp.open("GET", "http://127.0.0.1:8000/api/orders/list");
+  xhttp.send();
+}
+</script>
+</body>
+</html>

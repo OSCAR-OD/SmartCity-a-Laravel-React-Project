@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body onload="loadDoc()">
+<h2>Order API Test</h2>
+<ul>
+  <li id="orderId"></li>
+  <li id="orderName"></li>
+  <li id="userEmail"></li>
+  <li id="userPhone"></li>
+  <li id="amount"></li>
+  <li id="userId"></li>
+</ul>
+<img id="productImg"src="" width="200px">
+
+<script>
+function loadDoc() {
+  const xhttp = new XMLHttpRequest();
+  xhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+    	var obj_arr = JSON.parse( this.responseText);
+      
+     document.getElementById("orderId").innerHTML =obj_arr[0].id;
+      document.getElementById("orderName").innerHTML =obj_arr[0].oname;
+      document.getElementById("userEmail").innerHTML =obj_arr[0].email;
+      document.getElementById("userPhone").innerHTML =obj_arr[0].phone;
+      document.getElementById("amount").innerHTML =obj_arr[0].amount;
+      document.getElementById("userId").innerHTML =obj_arr[0].u_id;
+  const newarr=obj_arr.map(function(avalue){
+    document.getElementById("orderId").innerHTML =obj_arr[0].id;
+      document.getElementById("orderName").innerHTML =obj_arr[0].oname;
+      document.getElementById("userEmail").innerHTML =obj_arr[0].email;
+      document.getElementById("userPhone").innerHTML =obj_arr[0].phone;
+      document.getElementById("amount").innerHTML =obj_arr[0].amount;
+      document.getElementById("userId").innerHTML =obj_arr[0].u_id;
+
+    return avalue;
+    /*
+    Map has the convenience method forEach for iterating over its contents. Also see: http://devdocs.io/javascript/global_objects/map/foreach . Instead of using a for loop you could also do something like this:
+
+let befaktoren = new Map([['foo', 'bar'], ['bar', 'foo']]);
+
+let befaktorenFormatter = function(input) {
+  let formattedString;
+  input.forEach(function(value, key) {
+    formattedString += `${key}: ${value}<br>`;
+  });
+  return formattedString;
+};
+
+show.innerHTML = "Vorname: " + patient.vorname + "<br>Nachname: "
+    */
+  });
+  console.log(newarr);
+    }
+    };
+  xhttp.open("GET", "http://127.0.0.1:8000/api/orders/list");
+  xhttp.send();
+}
+</script>
+</body>
+</html>

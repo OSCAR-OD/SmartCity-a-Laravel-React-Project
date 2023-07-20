@@ -1,0 +1,31 @@
+/////////////////////////
+  $request->validate([
+    'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+]);
+
+$p = new Image();
+$p->imgname=$request->imgname;
+
+if($request->hasFile('image')){
+    $imageName = time()."_".$request->file('image')->getClientOriginalName();
+    // return $imageName;
+    $request->image->move(public_path('images'), $imageName);
+    $p->imgname=$imageName;
+    $p->save();
+    return back();
+}
+
+/* Store $imageName name in DATABASE from HERE */
+return "No file";
+
+//////////////////
+function checkEmail($email) {
+   $find1 = strpos($email, '@');
+   $find2 = strpos($email, '.');
+   return ($find1 !== false && $find2 !== false && $find2 > $find1);
+}
+
+$email = 'name@email.com';
+if ( checkEmail($email) ) {
+   echo $email . ' looks like a valid email address.';
+}
